@@ -7,6 +7,7 @@ namespace IntegrationSampleService.Tests
     {
         [Theory]
         [InlineData("PATH")]
+        [Trait("Category", "Unit")]
         public void TestEnv(string varName)
         {
             var varValue = SampleService.ReadEnvVar(varName);

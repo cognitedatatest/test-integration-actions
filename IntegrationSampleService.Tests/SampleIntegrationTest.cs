@@ -7,6 +7,7 @@ namespace IntegrationSampleService.Tests
     {
         [Theory]
         [InlineData("REPO_SECRET")]
+        [Trait("Category", "Integration")]
         public void TestSecret(string varName)
         {
             var varValue = SampleService.ReadEnvVar(varName);

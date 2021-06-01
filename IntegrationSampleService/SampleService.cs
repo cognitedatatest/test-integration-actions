@@ -6,6 +6,7 @@ namespace IntegrationSampleService
     {
         public static string ReadEnvVar(string name)
         {
+            Console.WriteLine($"Reading {name} ...");
             return Environment.GetEnvironmentVariable(name);
         }
     }

@@ -5,7 +5,7 @@ on:
     branches: [ integration ]
 
 jobs:
-  build-and-test:
+  integration-test:
 
     runs-on: ubuntu-latest
 

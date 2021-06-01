@@ -1,0 +1,25 @@
+name: .NET
+
+on:
+  push:
+    branches: [ integration ]
+
+jobs:
+  build-and-test:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.x
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --configuration Debug --no-restore
+    - name: Integration Tests
+      run: dotnet test --no-restore --verbosity normal --filter Category=Integration
+      env:
+        REPO_SECRET: ${{ secrets.REPO_SECRET }}

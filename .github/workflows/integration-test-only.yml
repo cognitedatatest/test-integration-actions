@@ -23,3 +23,17 @@ jobs:
       run: dotnet test --no-restore --verbosity normal --filter Category=Integration
       env:
         REPO_SECRET: ${{ secrets.REPO_SECRET }}
+  create-pr:
+    needs: integration-test
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Create PR to main
+      uses: repo-sync/pull-request@v2
+      with:
+        destination_branch: "main"
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        pr_title: "Pulling ${{ github.ref }} into main"
+        pr_body: ":crown: *Triggered by a push to the integration branch*"
+        pr_reviewer: "lprovensi"
+        pr_label: "auto-pr, contribution"

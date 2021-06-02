@@ -34,6 +34,6 @@ jobs:
         destination_branch: "main"
         github_token: ${{ secrets.GITHUB_TOKEN }}
         pr_title: "Pulling ${{ github.ref }} into main"
-        pr_body: ":crown: *Triggered by a push to the integration branch*"
+        pr_body: ":rocket: *Triggered by a push to the integration branch*"
         pr_reviewer: "lprovensi"
         pr_label: "auto-pr, contribution"

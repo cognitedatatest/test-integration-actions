@@ -23,17 +23,35 @@ jobs:
       run: dotnet test --no-restore --verbosity normal --filter Category=Integration
       env:
         REPO_SECRET: ${{ secrets.REPO_SECRET }}
+  #create-pr:
+  #  needs: integration-test
+  #  runs-on: ubuntu-latest
+  #  steps:
+  #  - uses: actions/checkout@v2
+  #  - name: Create PR to main
+  #    uses: repo-sync/pull-request@v2
+  #    with:
+  #      destination_branch: "main"
+  #      github_token: ${{ secrets.GITHUB_TOKEN }}
+  #      pr_title: "Pulling ${{ github.ref }} into main"
+  #      pr_body: ":rocket: *Triggered by a push to the integration branch*"
+  #      pr_reviewer: "lprovensi"
+  #      pr_label: "auto-pr, contribution"
   create-pr:
     needs: integration-test
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - name: Create PR to main
-      uses: repo-sync/pull-request@v2
-      with:
-        destination_branch: "main"
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        pr_title: "Pulling ${{ github.ref }} into main"
-        pr_body: ":rocket: *Triggered by a push to the integration branch*"
-        pr_reviewer: "lprovensi"
-        pr_label: "auto-pr, contribution"
+      - uses: actions/checkout@v2
+      - name: Create PR to main
+        uses: peter-evans/create-pull-request@v3
+        with:
+          base: main
+          branch: sync-to-main
+          delete-branch: true
+          title: "Pulling ${{ github.ref }} into main"
+          pr_body: "*Triggered by a push to the integration branch* :rocket: "
+          labels: |
+            contribution
+            auto-pr
+          team-reviewers: |
+            data-integration
